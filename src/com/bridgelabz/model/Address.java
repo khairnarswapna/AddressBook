@@ -1,7 +1,8 @@
 package com.bridgelabz.model;
 
-public class Address {
-
+public class Address 
+{
+     
 	 private String addrss;
 	 private String city;
 	 private String state;

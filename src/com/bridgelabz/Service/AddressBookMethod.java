@@ -19,7 +19,8 @@ public class AddressBookMethod implements IAddressBook
 	    public static int choice;
 		Scanner scanner = new Scanner(System.in);
 		int counter = 0;
-		String path = "/home/admin-1/eclipse-workspace/AddrssBook/src/com/bridgelabz/json/AddressBook1.json";
+		//String path = "/home/admin-1/eclipse-workspace/AddrssBook/src/com/bridgelabz/json/AddressBook1.json";
+		String path="/home/admin-1/eclipse-workspace/AddrssBook/src/com/bridgelabz/jsonfile/AddressBook1.json";
 		String statename = "";
 		
 		static AddressBookModel model = new AddressBookModel();   //creating object of Addressbook Model
@@ -30,31 +31,7 @@ public class AddressBookMethod implements IAddressBook
 		 
 
 		 
-		/**
-		 * Purpose: method for reading json from json files
-		 */
-		@Override
-		public void readJson() 
-		{
-			// checking whether it is empty or not
-			File file = new File(path);
-			if (file.exists() && file.length() != 0) 
-			{
-				try 
-				{
-					model = (AddressBookModel) Jsonutil.readMapper(path, model);
-				} 
-				catch (IOException e) 
-				{
-					e.printStackTrace();
-				}
-				persons.addAll(model.getPersons());
-				counter = persons.size();   //getting size of counter
-
-			}
-
-		}
-
+		 
 		/**
 		 * Purpose: creating new address book
 		 */
@@ -80,43 +57,29 @@ public class AddressBookMethod implements IAddressBook
 
 				System.out.println("State is added....");
 				//boolean close = false;
-
 				do 
 				{
-					System.out.println("\n1.Add record\n2.Edit record\n3.Delete Record\n4.sort by last name\n5.sort by zipcode\n6.print record\n7.Exit");
+					System.out.println("\n1.Add record\n2.Save.\n3.print record\n4.exit");
 					System.out.println("Enter your choice:");
 					choice = scanner.nextInt();
-					switch (choice) {
+					switch (choice) 
+					{
 					case 1:
 			 
 						addPerson();
-
 						break;
+ 
 					case 2:
-						 
-						editPerson(); // edit person
+						save();
+						System.out.println("records saved...");
 						break;
+						
 					case 3:
-						// delete person
-						deletePerson();
-						break;
-					case 4:
-						 
-						sortByLastName();
-
-						break;
-					case 5:
-					
-						sortByZip();
-
-						break;
-					case 6:
 						// print
 
 						if (counter > 0) 
 						{
 							System.out.println("address book records...");
-							
 							AddressBookMethod.PrintPersonDetails(persons, statename);
 
 						}
@@ -124,15 +87,12 @@ public class AddressBookMethod implements IAddressBook
 							System.out.println("There is no record to print...");
 
 						break;
-					case 7:
-						// close
-						//close = true;
-						System.out.println("...");
-						break;
-					default:
+						
+						default:
 						System.out.println("please Enter the valid option");
 					}
-				}while(choice!=8);
+				
+				}while(choice!=4);
 			} else
 				System.out.println("State exist please try again");
  
@@ -147,13 +107,13 @@ public class AddressBookMethod implements IAddressBook
 		{
 			System.out.println("***Open Address Book***");
 			
-			HashMap<String, String> map = new HashMap<>();
+		    HashMap<String, String> map = new HashMap<>();
 			for (int i = 0; i < persons.size(); i++) 
 			{
 			
 				map.put(persons.get(i).getAddressObj().getState(), persons.get(i).getAddressObj().getState());
 			}
-			System.out.println("states available in Address Book " + map.keySet());//if state is available
+			System.out.println("states available in Address Book " + map.keySet());//if state is available*/
 			
 			System.out.println("Enter state");
 			statename = scanner.next();
@@ -166,24 +126,25 @@ public class AddressBookMethod implements IAddressBook
 					break;
 				}
 			}
-			if (isFoundState) {
-				System.out.println("State is found");
-				 
-
+			if (isFoundState) 
+			{
+				System.out.println("State is found in AddressBook");
+				
+				
 				   do
 				   {
-					   System.out.println("\n1.Add Record\n2.edit Record\n3.delete Record\n4.sort by last name\n5.sort by zip\n6.print Address_Book\n7.Exit");
+					   System.out.println("\n1.Add Record\n2.edit Record\n3.delete Record\n4.sort by last name\n5.sort by zip\n6.print Address_Book\n7.save_record\n8.exit");
 					   System.out.println("Enter your choice:");
 					   choice=scanner.nextInt();
 					   switch (choice) 
 					   {
 					
 					   	case 1:
-					 
+					          //add person
 					   		addPerson();
 						break;
 					   	case 2:
-					 
+					         //edit Person 
 					   		editPerson();
 						break;
 					   	case 3:
@@ -203,7 +164,7 @@ public class AddressBookMethod implements IAddressBook
 								{
 									System.out.println("----------------ADDRESS BOOK------------");
 								 
-		                           AddressBookMethod.PrintPersonDetails(persons, statename);
+									AddressBookMethod.PrintPersonDetails(persons, statename);
 		
 								} else
 									System.out.println("There is no record to print...");
@@ -255,43 +216,41 @@ public class AddressBookMethod implements IAddressBook
 		@Override
 		public void saveAs() throws FileNotFoundException  
 		{
-		 
+			 
 
-			System.out.println("-------Save as------");
-			System.out.println("Please mention the file path where you want to store file");
-			System.out.println("for continue press (y/n)");
-			if (scanner.next().charAt(0) == 'y') 
-			{
-				String pathInput = "/home/admin-1/eclipse-workspace/AddrssBook/src/com/bridgelabz/json";
-				// checking whether path is valid or not
-				System.out.println("Enter filename");
-				pathInput += scanner.next();
-				pathInput += ".json";
+				System.out.println("*****Save as*****");
+				String Inputpath = "/home/admin-1/eclipse-workspace/AddrssBook/src/com/bridgelabz/jsonfile/";
+				System.out.println("Enter filename u want to save");
+				Inputpath += scanner.next();
+			    Inputpath+= ".json";
 				//pathInput += ".txt";
 				
-				if (new File(pathInput).exists()) 
+				if (new File(Inputpath).exists()) 
 				{
 					throw new FileNotFoundException("You cannot rewrite existing file");
 				} 
 				else 
 				{
 					// writing into file
-					System.out.println("Saving address book into file!!!!");
-					model.setPersons(persons);
+					System.out.println("Saving address book into file....");
+					model.setPersons(persons);///////////////////////////////
+					
 					try {
-						Jsonutil.writeMapper(pathInput, model);
+						Jsonutil.writeMapper(Inputpath, model);
 					} catch (IOException e) {
 
 						e.printStackTrace();
 					}
-					System.out.println();
-					System.out.println("Writing into file successful....");
+					 
 				}
-			}
- 
+			//}
+
+			 
 
 		}
-
+		
+		 
+  
 		 
 		@Override
 		public void addPerson() 
@@ -321,7 +280,12 @@ public class AddressBookMethod implements IAddressBook
 				
 				person.setMobileNO(mobile);
 				System.out.println("Enter person first name: ");
-				person.setFirstname(scanner.next().toLowerCase());
+			
+				//String name=scanner.next().toLowerCase();
+			    // System.out.println(name.isEmpty()+"please Enter valid string");
+			   //if(name.isEmpty()){System.out.println("please Enter valid string");}
+			  
+			    person.setFirstname(scanner.next().toLowerCase());
 				System.out.println("Enter person last name: ");
 				person.setLastname(scanner.next().toLowerCase());
 				System.out.println("Enter address Details: ");
@@ -343,6 +307,33 @@ public class AddressBookMethod implements IAddressBook
 			}
 
 		}
+		
+		/**
+		 * Purpose: method for reading json from json files
+		 */
+		@Override
+		public void readJson() 
+		{
+			// checking whether it is empty or not
+			File file = new File(path);
+			if (file.exists() && file.length() != 0) 
+			{
+				try 
+				{
+					model = (AddressBookModel) Jsonutil.readMapper(path, model);
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+				
+				persons.addAll(model.getPersons());
+			    counter = persons.size();   //getting size of counter
+
+			}
+
+		}
+
 
 		 /**
 		  * 
@@ -367,6 +358,7 @@ public class AddressBookMethod implements IAddressBook
 						persons.get(i).getAddressObj().setZipcode(scanner.nextInt());
                         persons.get(i).setMobileNO(Mobile);
 						System.out.println();
+						//
 						save();
 						System.out.println("Editing done!!!! ");
 						break;
@@ -381,6 +373,7 @@ public class AddressBookMethod implements IAddressBook
 
 		}
  
+		@SuppressWarnings("unused")
 		@Override
 		public void deletePerson() 
 		{
@@ -389,19 +382,17 @@ public class AddressBookMethod implements IAddressBook
 				System.out.println("Enter Persons Mobile number you want to delete from Address Book:");
 				Long Mobilesearch = scanner.nextLong();
 				 
-				for (int i = 0; i < persons.size(); i++) 
+				for (int i = 0; i < persons.size();i++) 
 				{
 					long mobile=(persons.get(i).getMobileNO());
 
 					if (Mobilesearch.equals(mobile))
 					{
-						//isRecordFound = true;
-						//indexOfPerson = i;
-						//break;
+						  
 						persons.remove(i);
 						counter--;
 						System.out.println();
-						System.out.println("data deleted sucussully");
+						System.out.println("data deleted Sucessfully!!");
 					}
 					else
 					  System.out.println("There is record found of this number");
@@ -416,7 +407,7 @@ public class AddressBookMethod implements IAddressBook
 		
 		/**
 		 * Purpose: Printing person detail
-		 * @param persons  nput from user
+		 * @param persons 
 		 * @param statename input from user
 		 */
 		public static void PrintPersonDetails(ArrayList<Person> persons, String statename) {
@@ -439,25 +430,17 @@ public class AddressBookMethod implements IAddressBook
 		 * Purpose: method for sorting object by the last name
 		 */
 		@Override
-		public void sortByLastName() {
-			if (counter > 1) {
-				System.out.println("Sorting by Last name is selected");
-
-//				for (int i = 0; i < persons.size() - 1; i++) {
-//					for (int j = 0; j < persons.size() - i - 1; j++) {
-	//
-//						if (persons.get(j).getLastname().compareTo(persons.get(j + 1).getLastname()) > 0) {
-//							Object temp = persons.get(j);
-//							persons.set(j, persons.get(j + 1));
-//							persons.set(j + 1, (Person) temp);
-	//
-//						}
-//					}
-//				}
+		public void sortByLastName() 
+		{
+			if (counter > 1) 
+			{
+				System.out.println("Sorting by Last name is.....");
+ 
 				Collections.sort(persons, (e1, e2) -> e1.getLastname().compareTo(e2.getLastname()));
 				
+				/*printing after sorting the data*/
 				AddressBookMethod.PrintPersonDetails(persons, statename);
-				//System.out.println("Sorting is completed to see the result select print option");
+				 
 			} else
 				System.out.println("Less records to sort");
 
@@ -470,29 +453,13 @@ public class AddressBookMethod implements IAddressBook
 		public void sortByZip() {
 			if (counter > 1) {
 				System.out.println("Sorting by zipcode");
-
-//				for (int i = 0; i < persons.size() - 1; i++) {
-//					for (int j = 0; j < persons.size() - i - 1; j++) {
-	//
-//						if (persons.get(j).getAddressObj().getZip() > persons.get(j + 1).getAddressObj().getZip()) {
-//							Object temp = persons.get(j);
-//							persons.set(j, persons.get(j + 1));
-//							persons.set(j + 1, (Person) temp);
-	//
-//						}
-//					}
-//				}
+				
 				Collections.sort(persons, (e1, e2) -> String.valueOf(e1.getAddressObj().getZipcode())
 						.compareTo(String.valueOf(e2.getAddressObj().getZipcode())));
 				
-				//System.out.println("Please wait...");
-				/*try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				System.out.println("Sorting is completed to see the result select print option");
+				AddressBookMethod.PrintPersonDetails(persons, statename);
+				 
+			 
 			} else
 				System.out.println("Less records to sort");
 

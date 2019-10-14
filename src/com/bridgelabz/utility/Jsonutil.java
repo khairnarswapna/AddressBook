@@ -1,3 +1,7 @@
+/**
+ * purpose:utility for jsonFiles
+ */
+
 package com.bridgelabz.utility;
 
 import java.io.File;
@@ -33,13 +37,12 @@ public class Jsonutil {
 
 	/**
 	 * Purpose: writing the json file
-	 * 
 	 * @param path   path of json file
 	 * @param object model class object where we can mapped objects
 	 * @return
-	 * @throws JsonParseException   throws exception if parsing fails
+	 * @throws JsonParseException  throws exception if parsing fails
 	 * @throws JsonMappingException throws exception if mapping to model is fails
-	 * @throws IOException          throws exception if input output operation fails
+	 * @throws IOException  throws exception if input output operation fails
 	 */
 	public static String writeMapper(String path, Object object)
 			throws JsonParseException, JsonMappingException, IOException {
